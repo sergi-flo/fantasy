@@ -1,0 +1,7 @@
+[71962:775:1208/025538.093461:INFO:CONSOLE(3)] "————————————————————— hitC++ : 8", source:  (3)
+[71962:775:1208/025538.109636:INFO:CONSOLE(3)] "————————————————————— hitC++ : 9", source:  (3)
+[71962:775:1208/025538.143971:INFO:CONSOLE(1)] "————————————————> Ratio: 0.22375", source:  (1)
+[71962:775:1208/025538.144417:INFO:CONSOLE(1)] "————————————————> MaximumRatio: 0.2", source:  (1)
+[71962:775:1208/025538.145179:INFO:CONSOLE(2)] "————————————————> Result: 101", source:  (2)
+[71962:775:1208/025555.866644:WARNING:pref_notifier_impl.cc(40)] Pref observer for browser.relaunch_notification_period found at shutdown.
+[71962:775:1208/025555.866723:WARNING:pref_notifier_impl.cc(40)] Pref observer for media_router.cast_allow_all_ips found at shutdown.

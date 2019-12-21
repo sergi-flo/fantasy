@@ -12,7 +12,7 @@ def save_cookies(driver, location):
 
     pickle.dump(driver.get_cookies(), open(location, "wb"))
 
-
+#get user and password to log in 
 user=input('Email: ')
 password=input('Password: ')
 # Path where you want to save/load cookies to/from aka C:\my\fav\directory\cookies.txt

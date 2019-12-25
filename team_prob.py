@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 
 import players_file
-import predictions
+import futbolfantasy
 
 def print_prob():
   team = players_file.players_from_file()
-  pre = predictions.predictions()
+  pre = futbolfantasy.predictions()
   for e in team:
     for player in team[e]:
       for p_player in pre[e]:

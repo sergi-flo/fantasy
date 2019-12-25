@@ -12,7 +12,7 @@ def players_to_file():
   for team in pre:
     for player in players:
       for p_pre in pre[team]:
-        if p_pre[:-4].lower() in player.lower(): #compare player from futbolfantasy to lalgiamarca
+        if p_pre[:-4].lower() in player.lower(): #compare player from futbolfantasy with lalgiamarca
           if team in d:
             d[team].append(player)
           else:

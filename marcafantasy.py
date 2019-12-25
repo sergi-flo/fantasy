@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
 
-from bs4 import BeautifulSoup
-import requests
 import login
 import time
 import sys

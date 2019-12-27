@@ -7,6 +7,5 @@ Aplicacion para automatizar procesos de la liga Fantasy Marca
 2-Guardar en un archivo txt --- DONE!
 3-Probabilidad de jugar mis jugadores --- DONE!
 4-Cuantos jugadores quedan por jugar --- DONE!
-5-Cuanto queda para clausula
 6-Menu
-7-ofertas valor mercado
+7-ofertas valor mercado --- solo implementado para una oferta(falta implementar mas ofertas y si queremos hacer acciones)

@@ -3,6 +3,112 @@
 import login
 import time
 
+
+def one_or_two(i,d,names,values,bids):
+  for y in range(bids[i]):
+    time.sleep(2)
+    players1=d.find_elements_by_xpath('//div[@class="market-action"]//div[@class="player-info"]')
+    players1[i].click()
+    d.find_element_by_xpath('//div[@class="market-action"]//button[@class="btn-fantasy red"]').click()
+    time.sleep(3)
+    diff_of=d.find_elements_by_xpath('//div[@class="modal-content"]//div[@class="offer animated fadeIn fast"]')
+    ofers_from=d.find_elements_by_xpath('//div[@class="modal-content"]//div[@class="offer animated fadeIn fast"]//span[@class="offer-info text"]')
+    ofers_amount=d.find_elements_by_xpath('//div[@class="modal-content"]//div[@class="offer animated fadeIn fast"]//span[@class="offer-info"]')
+    for e in ofers_amount:
+      print(e.text)
+    accepts=d.find_elements_by_xpath('//div[@class="modal-content"]//div[@class="offer animated fadeIn fast"]//button[@class="btn-fantasy big green"]')
+    declines=d.find_elements_by_xpath('//div[@class="modal-content"]//div[@class="offer animated fadeIn fast"]//button[@class="btn-fantasy big red"]')
+    backs=d.find_elements_by_xpath('//div[@class="modal-content"]//div[@class="offer animated fadeIn fast"]//button[@class="btn-fantasy big outline"]')
+    print('Name----> ',names[i])
+    print('')
+    accept=accepts[y]
+    decline=declines[y]
+    back=backs[y]
+    o=ofers_amount[y]
+    print(o.text)
+    offer=int(o.text[:-2].replace('.',''))
+    profit=round(offer/values[i],3)
+    print(ofers_from[y].text)
+    print('Value---> ',format(values[i],','))
+    print('Offer---> ',format(offer,','))
+    print('Profit--> ',profit)
+    print('')
+    correct=False
+    stop=False
+    while not correct:
+      a=input('What do you wanna do? sell (y), not sell (n) or next offer (b) --> ')
+      if a=='y':
+        accept.click()
+        correct=True
+        stop=True
+      if a=='n':
+        decline.click()
+        correct=True
+      if a=='b':
+        back.click()
+        correct=True
+    if stop:
+      break
+    print('')
+
+def three_or_more(i,d,names,values,bids):
+  for y in range(bids[i]):
+    time.sleep(2)
+    players1=d.find_elements_by_xpath('//div[@class="market-action"]//div[@class="player-info"]')
+    players1[i].click()
+    d.find_element_by_xpath('//div[@class="market-action"]//button[@class="btn-fantasy red"]').click()
+    time.sleep(3)
+    d.execute_script('''window.open("https://some.site/", "_blank");''')
+    d.switch_to_window(d.window_handles[-1])
+    d.get('chrome://settings')
+    d.execute_script('chrome.settingsPrivate.setDefaultZoom(0.25);')
+    d.switch_to_window(d.window_handles[0])
+    diff_of=d.find_elements_by_xpath('//div[@class="modal-content"]//div[@class="offer animated fadeIn fast"]')
+    ofers_from=d.find_elements_by_xpath('//div[@class="modal-content"]//div[@class="offer animated fadeIn fast"]//span[@class="offer-info text"]')
+    ofers_amount=d.find_elements_by_xpath('//div[@class="modal-content"]//div[@class="offer animated fadeIn fast"]//span[@class="offer-info"]')
+    for e in ofers_amount:
+      print(e.text)
+    accepts=d.find_elements_by_xpath('//div[@class="modal-content"]//div[@class="offer animated fadeIn fast"]//button[@class="btn-fantasy big green"]')
+    declines=d.find_elements_by_xpath('//div[@class="modal-content"]//div[@class="offer animated fadeIn fast"]//button[@class="btn-fantasy big red"]')
+    backs=d.find_elements_by_xpath('//div[@class="modal-content"]//div[@class="offer animated fadeIn fast"]//button[@class="btn-fantasy big outline"]')
+    print('Name----> ',names[i])
+    print('')
+    accept=accepts[y]
+    decline=declines[y]
+    back=backs[y]
+    o=ofers_amount[y]
+    print(o.text)
+    offer=int(o.text[:-2].replace('.',''))
+    profit=round(offer/values[i],3)
+    print(ofers_from[y].text)
+    print('Value---> ',format(values[i],','))
+    print('Offer---> ',format(offer,','))
+    print('Profit--> ',profit)
+    print('')
+    correct=False
+    stop=False
+    while not correct:
+      a=input('What do you wanna do? sell (y), not sell (n) or next offer (b) --> ')
+      if a=='y':
+        d.execute_script("arguments[0].click();", accept)
+        correct=True
+        stop=True
+      if a=='n':
+        d.execute_script("arguments[0].click();", decline)
+        correct=True
+      if a=='b':
+        d.execute_script("arguments[0].click();", back)
+        correct=True
+    if stop:
+      break
+      i-=1
+    d.switch_to_window(d.window_handles[-1])
+    d.execute_script('chrome.settingsPrivate.setDefaultZoom(1);')
+    d.close()
+    d.switch_to_window(d.window_handles[0])
+    print('')
+
+
 def ofertas():
   d=login.login()
   d.find_element_by_xpath('//*[@id="sidebar"]/div/ul/li[3]/a/span').click()
@@ -21,45 +127,20 @@ def ofertas():
       bids.append(int(z.text[:1]))
   players=d.find_elements_by_xpath('//div[@class="market-action"]//div[@class="player-info"]')
   for i in range(len(players)) :
-    if bids[i]==1:
-      players[i].click()
-      time.sleep(1)
-      d.find_element_by_xpath('//div[@class="market-action"]//button[@class="btn-fantasy red"]').click()
-      time.sleep(2)
-      accept=d.find_element_by_xpath('/html/body/modal-container/div/div/fy-show-offers-modal/div[2]/div/div/div/button[1]')
-      decline=d.find_element_by_xpath('/html/body/modal-container/div/div/fy-show-offers-modal/div[2]/div/div/div/button[2]')
-      back=d.find_element_by_xpath('/html/body/modal-container/div/div/fy-show-offers-modal/div[2]/div/div/div/button[3]')
-      o=d.find_elements_by_class_name('offer-info')
-      offer=int(o[1].text[:-2].replace('.',''))
-      profit=round(offer/values[i],3)
+    if bids[i]==1 or bids[i]==2:
+      one_or_two(i,d,names,values,bids)
+    elif bids[i]==0:
       print('Name----> ',names[i])
       print('Value---> ',format(values[i],','))
-      print('Offer---> ',format(offer,','))
-      print('Profit--> ',profit)
       print('')
-      correct=False
-      while not correct:
-        a=input('What do you wanna do? sell (y), not sell (n) and back(b) --> ')
-        if a=='y':
-          accept.click()
-          correct=True
-        if a=='n':
-          decline.click()
-          correct=True
-        if a=='b':
-          back.click()
-          correct=True
-      print('')
-      print('')
+      print('There are no bids for this player!!') 
     else:
-      print('Name----> ',names[i])
-      print('Value---> ',format(values[i],','))
-      print('')
-      print('There are no bids for this player!!')
-      print('')
-      print('')
-    time.sleep(1)
+      three_or_more(i,d,names,values,bids)
+    print('')
+    print('')
+    time.sleep(2)
   d.close()
+
 
 if __name__=='__main__':
   ofertas()

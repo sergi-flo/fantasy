@@ -58,6 +58,9 @@ def login():
   a=d.find_element_by_xpath('/html/body/fy-app/fy-layout/div/div/div/main/fy-login/div/div/div/div[1]/button/span')
   a.click()
   time.sleep(5)
-  d.find_element_by_xpath('/html/body/fy-app/fy-layout/div/div/div/main/fy-home/div/div[1]/div[2]/div/div/fy-league-item/div/div[2]').click()
+  try:
+    d.find_element_by_xpath('/html/body/fy-app/fy-layout/div/div/div/main/fy-home/div/div[1]/div[2]/div/div/fy-league-item/div/div[2]').click()
+  except:
+    d.find_element_by_xpath('/html/body/fy-app/fy-layout/div/div/div/main/fy-home/div/div[1]/div[2]/div/div[1]/fy-league-item/div/div[2]').click()
   time.sleep(2)
   return d

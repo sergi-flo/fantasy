@@ -3,6 +3,7 @@ import time
 import login
 import players_file
 import futbolfantasy
+import time, os
 
 def players_playing():
   d=login.login()
@@ -11,10 +12,13 @@ def players_playing():
   #print(players)
   #print(len(players))
   res={}
-  for i in range(1,13):
+  for i in range(12):
     p={'Barcelona':[], 'Real Madrid':[], 'Sevilla':[], 'Atlético':[], 'Real Sociedad':[], 'Getafe':[], 'Athletic':[], 'Valencia':[], 'Levante':[], 'Villarreal':[], 'Granada':[], 'Osasuna':[], 'Betis':[], 'Valladolid':[], 'Alavés':[], 'Eibar':[], 'Mallorca':[], 'Celta':[], 'Leganés':[], 'Espanyol':[]}
-    players=d.find_elements_by_class_name('name')
+    players=d.find_elements_by_xpath('//div[@class="card border-light"]//h5[@class="name"]')
+  #  for e in players:
+  #    print(e.text)
     name=players[i].text
+  #  print(name)
     players[i].click()
     if name == 'sersik9':
       d.find_element_by_xpath('//*[@id="points-tab"]').click()
@@ -41,15 +45,15 @@ def players_playing():
     d.find_element_by_xpath('//*[@id="sidebar"]/div/ul/li[1]/a').click()
     time.sleep(1)
   #for e in res:
-  print(res)
+  #print(res)
   d.close()
   return res
 
-def players_remaining():
+def players_remaining(pp):
   res={}
   ty,tc,tn=futbolfantasy.games_played()
-  #ty,tc=['Eibar', 'Granada', 'Mallorca', 'Sevilla', 'Barcelona', 'Alavés', 'Villarreal', 'Getafe', 'Valladolid', 'Valencia', 'Leganés', 'Espanyol', 'Osasuna', 'Real Sociedad', 'Betis', 'Atlético', 'Levante', 'Celta'], ['Real Madrid', 'Athletic']
-  pp=players_playing()
+  if pp==None:
+    return 'No playing players selected'
   plantillas=players_file.all_marca_players_from_file()
   for player in pp: #every player playing in the league
     y,c,n=0,0,0
@@ -63,17 +67,37 @@ def players_remaining():
                 y+=1
                 break
     res[player]=[y,11-y]
-  print(res)
+  #print(res)
   return res
 
 def print_players_remaining():
-  #d=players_remaining()
-  d={'Maria Pajas': [11, 0], 'Suebrio': [11, 0], 'BayernDeLosCaídos': [10, 1], 'Viniciusbalondeoro': [8, 3], 'sersik9': [9, 2], 'Alvarín': [10, 1], 'Satisfyer 3000': [10, 1], 'Alejo Moudina': [11, 0], 'Guasp': [10, 1], 'Kaifer': [8, 3], 'TomásRoncero07': [10, 1], 'DaniPXX': [8, 3]}
-  print('-'*43)
-  print('Players'.ljust(20),'| Remaining'.ljust(8),'| Played |')
-  print('-'*43)
-  for player in d:
-    print(player.ljust(20),'|    ',str(d[player][1]).ljust(5),'|  ',str(d[player][0]).ljust(4),'|')
+  dr=login.login()
+  dr.find_element_by_xpath('//*[@id="sidebar"]/div/ul/li[1]/a').click()
+  players=dr.find_elements_by_xpath('//div[@class="card border-light"]//h5[@class="name"]')
+  points=dr.find_elements_by_xpath('//div[@class="card border-light"]//span[@class="positive"]')
+  clas=[]
+  for x,y in zip(players,points):
+    clas.append([x.text,y.text])
+  dr.close()
+  print('Actual date is: '.ljust(40), time.ctime())
+  print('File last modification is: '.ljust(40),time.ctime(os.path.getmtime('playing_players.json')))
+  print('')
+  inp=input('Quieres cargar nuevas alineaciones y usarlas(1) o usar las que ya estan(2)? ')
+  corr=False
+  while not corr:
+    if inp == '1':
+      players_file.playing_players_to_file()
+      pp=players_file.playing_players_from_file()
+      corr=True
+    elif inp == '2':
+      pp=players_file.playing_players_from_file()
+      corr=True
+  d=players_remaining(pp)
+  print('-'*53)
+  print('Players'.ljust(20),'| Remaining'.ljust(8),'| Played |',' Puntos |')
+  print('-'*53)
+  for player in clas:
+    print(player[0].ljust(20),'|    ',str(d[player[0]][1]).ljust(5),'|  ',str(d[player[0]][0]).ljust(4),'|   ',player[1].ljust(4),'|')
 
 if __name__=='__main__':
   a=input('1-Players remaining, 2- Players playing, 3-Print players remaining ---> ')

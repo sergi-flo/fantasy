@@ -4,6 +4,7 @@ import get_players
 import futbolfantasy
 import marcafantasy
 import json
+import remaining
 
 def players_to_file():
   d={}
@@ -52,11 +53,26 @@ def all_marca_players_from_file():
      all_marca_players=json.load(f)
   return all_marca_players
 
+
+def playing_players_to_file():
+  all_playing_players=remaining.players_playing()
+  with open('playing_players.json','w+') as f:
+    json.dump(all_playing_players,f)
+  
+
+def playing_players_from_file():
+  with open('playing_players.json','r') as f:
+     all_playing_players=json.load(f)
+  return all_playing_players
+
+
 if __name__=='__main__':
-  a=input('1-Team player to file, 2-All players to file, 3-All marca players to file --> ')
+  a=input('1-Team player to file, 2-All players to file, 3-All marca players to file, 4-Players playing to a file --> ')
   if a == '1':
     players_to_file()
   elif a == '3':
     all_marca_players_to_file()
+  elif a == '4':
+    playing_players_to_file()
   else:
     all_players_to_file()

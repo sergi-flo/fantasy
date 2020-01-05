@@ -111,6 +111,61 @@ def three_or_more(i,d,names,values,bids):
     print('')
 
 
+def one_or_two(i,d,names,values,bids):
+  for y in range(bids[i]):
+    time.sleep(2)
+    players1=d.find_elements_by_xpath('//div[@class="market-action"]//div[@class="player-info"]')
+    players1[i].click()
+    time.sleep(1)
+    d.find_element_by_xpath('//div[@class="market-action"]//button[@class="btn-fantasy red"]').click()
+    time.sleep(3)
+    diff_of=d.find_elements_by_xpath('//div[@class="modal-content"]//div[@class="offer animated fadeIn fast"]')
+    ofers_from=d.find_elements_by_xpath('//div[@class="modal-content"]//div[@class="offer animated fadeIn fast"]//span[@class="offer-info text"]')
+    ofers_amount=d.find_elements_by_xpath('//div[@class="modal-content"]//div[@class="offer animated fadeIn fast"]//span[@class="offer-info"]')
+    print('Name----> ',names[i])
+    print('')
+    o=ofers_amount[y]
+    print(o.text)
+    offer=int(o.text[:-2].replace('.',''))
+    profit=round(offer/values[i],3)
+    print(ofers_from[y].text)
+    print('Value---> ',format(values[i],','))
+    print('Offer---> ',format(offer,','))
+    print('Profit--> ',profit)
+    print('')
+
+def three_or_more(i,d,names,values,bids):
+  for y in range(bids[i]):
+    time.sleep(2)
+    players1=d.find_elements_by_xpath('//div[@class="market-action"]//div[@class="player-info"]')
+    players1[i].click()
+    time.sleep(1)
+    d.find_element_by_xpath('//div[@class="market-action"]//button[@class="btn-fantasy red"]').click()
+    time.sleep(3)
+    d.execute_script('''window.open("https://some.site/", "_blank");''')
+    d.switch_to_window(d.window_handles[-1])
+    d.get('chrome://settings')
+    d.execute_script('chrome.settingsPrivate.setDefaultZoom(0.25);')
+    d.switch_to_window(d.window_handles[0])
+    diff_of=d.find_elements_by_xpath('//div[@class="modal-content"]//div[@class="offer animated fadeIn fast"]')
+    ofers_from=d.find_elements_by_xpath('//div[@class="modal-content"]//div[@class="offer animated fadeIn fast"]//span[@class="offer-info text"]')
+    ofers_amount=d.find_elements_by_xpath('//div[@class="modal-content"]//div[@class="offer animated fadeIn fast"]//span[@class="offer-info"]')
+    print('Name----> ',names[i])
+    print('')
+    o=ofers_amount[y]
+    print(o.text)
+    offer=int(o.text[:-2].replace('.',''))
+    profit=round(offer/values[i],3)
+    print(ofers_from[y].text)
+    print('Value---> ',format(values[i],','))
+    print('Offer---> ',format(offer,','))
+    print('Profit--> ',profit)
+    print('')
+    d.switch_to_window(d.window_handles[-1])
+    d.execute_script('chrome.settingsPrivate.setDefaultZoom(1);')
+    d.close()
+    d.switch_to_window(d.window_handles[0])
+
 def ofertas():
   d=login.login()
   d.find_element_by_xpath('//*[@id="sidebar"]/div/ul/li[3]/a/span').click()
@@ -128,19 +183,39 @@ def ofertas():
       values.append(int(y.text[6:].replace('.','')))
       bids.append(int(z.text[:1]))
   players=d.find_elements_by_xpath('//div[@class="market-action"]//div[@class="player-info"]')
-  for i in range(len(players)) :
-    if bids[i]==1 or bids[i]==2:
-      one_or_two(i,d,names,values,bids)
-    elif bids[i]==0:
-      print('Name----> ',names[i])
-      print('Value---> ',format(values[i],','))
-      print('')
-      print('There are no bids for this player!!') 
-    else:
-      three_or_more(i,d,names,values,bids)
-    print('')
-    print('')
-    time.sleep(2)
+  corr=False
+  while not corr:
+  inp=input('Would you like to make actions(1) or just watch offers(2)? ')
+    if inp == '1':
+      for i in range(len(players)) :
+        if bids[i]==1 or bids[i]==2:
+          one_or_two(i,d,names,values,bids)
+        elif bids[i]==0:
+          print('Name----> ',names[i])
+          print('Value---> ',format(values[i],','))
+          print('')
+          print('There are no bids for this player!!') 
+        else:
+          three_or_more(i,d,names,values,bids)
+        print('')
+        print('')
+        time.sleep(2)
+      corr=True
+    if inp == '2':
+      for i in range(len(players)) :
+        if bids[i]==1 or bids[i]==2:
+          one_or_two_no(i,d,names,values,bids)
+        elif bids[i]==0:
+          print('Name----> ',names[i])
+          print('Value---> ',format(values[i],','))
+          print('')
+          print('There are no bids for this player!!') 
+        else:
+          three_or_more_no(i,d,names,values,bids)
+        print('')
+        print('')
+        time.sleep(2)
+      corr=True
   d.close()
 
 

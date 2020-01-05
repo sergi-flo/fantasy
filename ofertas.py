@@ -15,8 +15,6 @@ def one_or_two(i,d,names,values,bids):
     diff_of=d.find_elements_by_xpath('//div[@class="modal-content"]//div[@class="offer animated fadeIn fast"]')
     ofers_from=d.find_elements_by_xpath('//div[@class="modal-content"]//div[@class="offer animated fadeIn fast"]//span[@class="offer-info text"]')
     ofers_amount=d.find_elements_by_xpath('//div[@class="modal-content"]//div[@class="offer animated fadeIn fast"]//span[@class="offer-info"]')
-    for e in ofers_amount:
-      print(e.text)
     accepts=d.find_elements_by_xpath('//div[@class="modal-content"]//div[@class="offer animated fadeIn fast"]//button[@class="btn-fantasy big green"]')
     declines=d.find_elements_by_xpath('//div[@class="modal-content"]//div[@class="offer animated fadeIn fast"]//button[@class="btn-fantasy big red"]')
     backs=d.find_elements_by_xpath('//div[@class="modal-content"]//div[@class="offer animated fadeIn fast"]//button[@class="btn-fantasy big outline"]')
@@ -68,8 +66,6 @@ def three_or_more(i,d,names,values,bids):
     diff_of=d.find_elements_by_xpath('//div[@class="modal-content"]//div[@class="offer animated fadeIn fast"]')
     ofers_from=d.find_elements_by_xpath('//div[@class="modal-content"]//div[@class="offer animated fadeIn fast"]//span[@class="offer-info text"]')
     ofers_amount=d.find_elements_by_xpath('//div[@class="modal-content"]//div[@class="offer animated fadeIn fast"]//span[@class="offer-info"]')
-    for e in ofers_amount:
-      print(e.text)
     accepts=d.find_elements_by_xpath('//div[@class="modal-content"]//div[@class="offer animated fadeIn fast"]//button[@class="btn-fantasy big green"]')
     declines=d.find_elements_by_xpath('//div[@class="modal-content"]//div[@class="offer animated fadeIn fast"]//button[@class="btn-fantasy big red"]')
     backs=d.find_elements_by_xpath('//div[@class="modal-content"]//div[@class="offer animated fadeIn fast"]//button[@class="btn-fantasy big outline"]')
@@ -111,7 +107,7 @@ def three_or_more(i,d,names,values,bids):
     print('')
 
 
-def one_or_two(i,d,names,values,bids):
+def one_or_two_no(i,d,names,values,bids):
   for y in range(bids[i]):
     time.sleep(2)
     players1=d.find_elements_by_xpath('//div[@class="market-action"]//div[@class="player-info"]')
@@ -122,6 +118,7 @@ def one_or_two(i,d,names,values,bids):
     diff_of=d.find_elements_by_xpath('//div[@class="modal-content"]//div[@class="offer animated fadeIn fast"]')
     ofers_from=d.find_elements_by_xpath('//div[@class="modal-content"]//div[@class="offer animated fadeIn fast"]//span[@class="offer-info text"]')
     ofers_amount=d.find_elements_by_xpath('//div[@class="modal-content"]//div[@class="offer animated fadeIn fast"]//span[@class="offer-info"]')
+    backs=d.find_elements_by_xpath('//div[@class="modal-content"]//div[@class="offer animated fadeIn fast"]//button[@class="btn-fantasy big outline"]')
     print('Name----> ',names[i])
     print('')
     o=ofers_amount[y]
@@ -132,9 +129,10 @@ def one_or_two(i,d,names,values,bids):
     print('Value---> ',format(values[i],','))
     print('Offer---> ',format(offer,','))
     print('Profit--> ',profit)
+    backs[i].click()
     print('')
 
-def three_or_more(i,d,names,values,bids):
+def three_or_more_no(i,d,names,values,bids):
   for y in range(bids[i]):
     time.sleep(2)
     players1=d.find_elements_by_xpath('//div[@class="market-action"]//div[@class="player-info"]')
@@ -150,6 +148,7 @@ def three_or_more(i,d,names,values,bids):
     diff_of=d.find_elements_by_xpath('//div[@class="modal-content"]//div[@class="offer animated fadeIn fast"]')
     ofers_from=d.find_elements_by_xpath('//div[@class="modal-content"]//div[@class="offer animated fadeIn fast"]//span[@class="offer-info text"]')
     ofers_amount=d.find_elements_by_xpath('//div[@class="modal-content"]//div[@class="offer animated fadeIn fast"]//span[@class="offer-info"]')
+    backs=d.find_elements_by_xpath('//div[@class="modal-content"]//div[@class="offer animated fadeIn fast"]//button[@class="btn-fantasy big outline"]')
     print('Name----> ',names[i])
     print('')
     o=ofers_amount[y]
@@ -160,6 +159,7 @@ def three_or_more(i,d,names,values,bids):
     print('Value---> ',format(values[i],','))
     print('Offer---> ',format(offer,','))
     print('Profit--> ',profit)
+    d.execute_script("arguments[0].click();", back[i])
     print('')
     d.switch_to_window(d.window_handles[-1])
     d.execute_script('chrome.settingsPrivate.setDefaultZoom(1);')
@@ -185,7 +185,7 @@ def ofertas():
   players=d.find_elements_by_xpath('//div[@class="market-action"]//div[@class="player-info"]')
   corr=False
   while not corr:
-  inp=input('Would you like to make actions(1) or just watch offers(2)? ')
+    inp=input('Would you like to make actions(1) or just watch offers(2)? ')
     if inp == '1':
       for i in range(len(players)) :
         if bids[i]==1 or bids[i]==2:

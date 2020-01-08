@@ -129,7 +129,7 @@ def one_or_two_no(i,d,names,values,bids):
     print('Value---> ',format(values[i],','))
     print('Offer---> ',format(offer,','))
     print('Profit--> ',profit)
-    backs[i].click()
+    backs[y].click()
     print('')
 
 def three_or_more_no(i,d,names,values,bids):
@@ -159,7 +159,7 @@ def three_or_more_no(i,d,names,values,bids):
     print('Value---> ',format(values[i],','))
     print('Offer---> ',format(offer,','))
     print('Profit--> ',profit)
-    d.execute_script("arguments[0].click();", back[i])
+    d.execute_script("arguments[0].click();", back[y])
     print('')
     d.switch_to_window(d.window_handles[-1])
     d.execute_script('chrome.settingsPrivate.setDefaultZoom(1);')

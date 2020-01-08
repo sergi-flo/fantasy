@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-import time
 import login
 import players_file
 import futbolfantasy

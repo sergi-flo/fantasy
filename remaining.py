@@ -28,8 +28,8 @@ def players_playing():
       ts=d.find_elements_by_xpath('//div[@class="lineUp col-sm-12 text-center animated fadeIn fast"]//span[@class="team-img rotate45"]')
       if name == 'sersik9':
         l=0
-        for p in j:
-          if p.text!='':
+        for pp in j:
+          if pp.text!='':
             l+=1
         j,ts=j[:l], ts[:l]
       if name =='DaniPXX':

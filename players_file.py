@@ -7,18 +7,18 @@ import json
 import remaining
 
 def players_to_file():
-  d={}
-  pre = futbolfantasy.predictions()
-  players = get_players.get_players()
-  for team in pre:
-    for player in players:
-      for p_pre in pre[team]:
-        if p_pre[:-4].lower() in player.lower(): #compare player from futbolfantasy with lalgiamarca
-          if team in d:
-            d[team].append(player)
-          else:
-            d[team]=[player]
+  #pre = futbolfantasy.predictions()
+  d={'Barcelona':[], 'Real Madrid':[], 'Sevilla':[], 'Atlético':[], 'Real Sociedad':[], 'Getafe':[], 'Athletic':[], 'Valencia':[], 'Levante':[], 'Villarreal':[], 'Granada':[], 'Osasuna':[], 'Betis':[], 'Valladolid':[], 'Alavés':[], 'Eibar':[], 'Mallorca':[], 'Celta':[], 'Leganés':[], 'Espanyol':[]}
+  players,ts = get_players.get_players()
+  #print(players)
+  #for player,t in zip(players,ts):
+  #  print(player, t)
+  for team in d:
+    for player,t in zip(players,ts):
+      if team.lower().replace('é','e').replace(' ','-') in t:
+          d[team].append(player)
 
+  print(d)
 
   with open('players.json','w+') as f:
     json.dump(d,f)

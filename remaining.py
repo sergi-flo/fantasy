@@ -27,7 +27,11 @@ def players_playing():
       j=d.find_elements_by_class_name('card-title')
       ts=d.find_elements_by_xpath('//div[@class="lineUp col-sm-12 text-center animated fadeIn fast"]//span[@class="team-img rotate45"]')
       if name == 'sersik9':
-        j,ts=j[11:], ts[11:]
+        l=0
+        for p in j:
+          if p.text!='':
+            l+=1
+        j,ts=j[:l], ts[:l]
       if name =='DaniPXX':
         break
       if len(j)==11 and len(ts)==11:

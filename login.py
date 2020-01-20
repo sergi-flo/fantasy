@@ -64,3 +64,6 @@ def login():
     d.find_element_by_xpath('/html/body/fy-app/fy-layout/div/div/div/main/fy-home/div/div[1]/div[2]/div/div[1]/fy-league-item/div/div[2]').click()
   time.sleep(2)
   return d
+
+if __name__=='__main__':
+  login()

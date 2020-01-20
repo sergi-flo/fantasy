@@ -63,23 +63,6 @@ def print_dic(x,y):
         print(jl.ljust(40),'|'.ljust(10), jv)
     print('\n')
 
-def predictions():
-  url = 'http://www.futbolfantasy.com/laliga/calendario'
-  content = requests.get(url)
-  soup = BeautifulSoup(content.text, 'lxml')
-  u = soup.find_all(class_='resultado')
-  u_p = u[len(u)-1]
-  jornada = u_p.parent.parent.parent.next_sibling.next_sibling.next_sibling.next_sibling
-  #print(jornada)
-  partidos = []
-  alineaciones = {}
-  niveles = {}
-  get_links(jornada,partidos)
-  #print(partidos)
-  get_players(partidos,alineaciones,niveles) 
-  #print_dic(alineaciones,niveles)
-  #print(alineaciones)
-  return alineaciones
 
 def predictions_print():
   url = 'http://www.futbolfantasy.com/laliga/calendario'

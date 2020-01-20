@@ -16,7 +16,7 @@ def get_players():
   teams=d.find_elements_by_xpath('//div[@class="lineUp col-sm-12 text-center animated fadeIn fast"]//span[@class="team-img rotate45"]')
   ts=[]
   for e in teams:
-    ts.appned(e.get_attribute('style'))
+    ts.append(e.get_attribute('style'))
   d.close()
   return players, ts
   #print(players)

@@ -46,6 +46,8 @@ def login():
   cookies_location = "/Users/Sergiflo/Programacion/fantasy/cookies.txt"
   options=Options()
   options.add_argument('user-data-dir:/Users/SergiFlo/Programacion/fantasy/chrome')
+  options.add_argument("--headless")
+  options.add_argument('window-size=1920x1080')
   
   #get to league, success
   d=webdriver.Chrome(chrome_options=options)

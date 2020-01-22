@@ -10,7 +10,7 @@ def menu():
     num=input('What do you wanna do --> ')
     print('------------------------------------------------------')
     if num=='1':
-      save_cookies.save_cookies()
+      save_cookies.saveCookies()
     if num=='2':
       futbolfantasy.predictions_print()
     if num=='3':

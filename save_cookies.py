@@ -12,7 +12,7 @@ def save_cookies(driver, location):
 
     pickle.dump(driver.get_cookies(), open(location, "wb"))
 
-def save_cookies():
+def saveCookies():
   #get user and password to log in 
   user=input('Email: ')
   password=input('Password: ')
@@ -37,4 +37,4 @@ def save_cookies():
 
 
 if __name__=='__main__':
-  save_cookies()
+  saveCookies()

@@ -46,6 +46,8 @@ def login():
   cookies_location = "/Users/Sergiflo/Programacion/fantasy/cookies.txt"
   options=Options()
   options.add_argument('user-data-dir:/Users/SergiFlo/Programacion/fantasy/chrome')
+  options.add_argument("--headless")
+  options.add_argument('window-size=1920x1080')
   
   #get to league, success
   d=webdriver.Chrome(chrome_options=options)
@@ -63,6 +65,7 @@ def login():
   except:
     d.find_element_by_xpath('/html/body/fy-app/fy-layout/div/div/div/main/fy-home/div/div[1]/div[2]/div/div[1]/fy-league-item/div/div[2]').click()
   time.sleep(2)
+  print('Logged in ...')
   return d
 
 if __name__=='__main__':

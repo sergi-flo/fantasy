@@ -12,7 +12,7 @@ def save_cookies(driver, location):
 
     pickle.dump(driver.get_cookies(), open(location, "wb"))
 
-def save_cookies():
+def saveCookies():
   #get user and password to log in 
   user=input('Email: ')
   password=input('Password: ')
@@ -20,6 +20,8 @@ def save_cookies():
   cookies_location = "/Users/Sergiflo/Programacion/fantasy/cookies.txt"
   options=Options()
   options.add_argument('user-data-dir:/Users/SergiFlo/Programacion/fantasy/chrome')
+  options.add_argument("--headless")
+  options.add_argument('window-size=1920x1080')
   
   
   #Save cookies
@@ -35,4 +37,4 @@ def save_cookies():
 
 
 if __name__=='__main__':
-  save_cookies()
+  saveCookies()
